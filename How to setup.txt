@@ -1,0 +1,67 @@
+Complete Setup Guide — Fresh Windows Laptop
+
+Step 1 — Install Java JDK 21
+Go to: https://adoptium.net/temurin/releases/?version=21
+Download Windows x64 .msi installer
+Run it — check "Set JAVA_HOME" and "Add to PATH" during install
+Verify: open CMD and run java -version → should show 21.x.x
+
+Step 2 — Install Maven
+Go to: https://maven.apache.org/download.cgi
+Download Binary zip archive (e.g. apache-maven-3.9.6-bin.zip)
+Extract to C:\maven\apache-maven-3.9.6
+Add to PATH:
+Search "Environment Variables" in Start Menu
+Under System Variables, find Path → Edit → New
+Add: C:\maven\apache-maven-3.9.6\bin
+Verify: mvn -version in CMD
+
+Step 3 — Install Node.js
+Go to: https://nodejs.org/
+Download LTS version (Windows Installer .msi)
+Run the installer (defaults are fine)
+Verify: node -v and npm -v in CMD
+
+Step 4 — Install XAMPP (MySQL)
+Go to: https://www.apachefriends.org/
+Download XAMPP for Windows
+Install it (default path xampp)
+Open XAMPP Control Panel → click Start next to MySQL
+
+Step 5 — Set Up the Database
+Open CMD and run:
+"C:\xampp\mysql\bin\mysql.exe" -u root -e "CREATE DATABASE IF NOT EXISTS querysolve;"
+"C:\xampp\mysql\bin\mysql.exe" -u root querysolve < "PATH_TO_PROJECT\complaint-management-backend\src\main\resources\schema.sql"
+
+Replace PATH_TO_PROJECT with wherever you put the project folder.
+
+Or manually via phpMyAdmin:
+Open browser → http://localhost/phpmyadmin
+Click New → create database named querysolve
+Click querysolve → Import tab → choose schema.sql file → Go
+
+Step 6 — Get the Project
+Copy the project folder to the laptop (USB / zip / Git). The folder must be named without special characters in the path. If copying to Desktop, rename to something like CMS to avoid path issues:
+C:\CMS\
+  complaint-management-backend\
+  complaint-management-frontend\
+Important: Avoid & in the folder path — it breaks npm scripts on Windows.
+
+Step 7 — Start the Backend
+Open CMD:
+cd C:\CMS\complaint-management-backend
+mvn spring-boot:run
+Wait for: Started ComplaintManagementApplication — takes ~30 seconds first time (downloads dependencies).
+
+Step 8 — Start the Frontend
+Open a second CMD window:
+cd C:\CMS\complaint-management-frontend
+npm install
+npm start
+Browser opens automatically at http://localhost:3000
+
+Step 9 — Log In
+Role	Username	Password
+HOD	hod_user1	123456
+Employee	emp2@gmail.com	123123
+Engineer	engineer1@example.com	444444
